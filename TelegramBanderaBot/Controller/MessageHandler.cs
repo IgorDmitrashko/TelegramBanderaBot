@@ -97,20 +97,20 @@ namespace TelegramBanderaBot.TelegramBot
 
                         var messageTelegram = await botClient.SendTextMessageAsync(message.Chat.Id, "Работаю над доком", replyToMessageId: message.MessageId);
 
-                        //if(message.Document.FileName.ToLower().Contains(".pdf"))
-                        //{
-                        //    string pathNamePdfToJpg = lovePdf.GetPdfToJpg(destinationFilePath, _theNameOfDownloadedFileFromTelegram);
-                        //    await using Stream streamPdfToJpg = File.OpenRead(pathNamePdfToJpg);
-                        //    await botClient.SendDocumentAsync(message.Chat.Id, new InputOnlineFile(streamPdfToJpg, pathNamePdfToJpg), replyToMessageId: message.MessageId);
-                        //    await botClient.DeleteMessageAsync(messageTelegram.Chat.Id, messageTelegram.MessageId);
-                        //}
-                        //else if(message.Document.FileName.ToLower().Contains(".pdf")||message.Document.FileName.ToLower().Contains(".xls"))
-                        //{
+                        if(message.Document.FileName.ToLower().Contains(".pdf"))
+                        {
+                            string pathNamePdfToJpg = lovePdf.GetPdfToJpg(destinationFilePath, _theNameOfDownloadedFileFromTelegram);
+                            await using Stream streamPdfToJpg = File.OpenRead(pathNamePdfToJpg);
+                            await botClient.SendDocumentAsync(message.Chat.Id, new InputOnlineFile(streamPdfToJpg, pathNamePdfToJpg), replyToMessageId: message.MessageId);
+                           await botClient.DeleteMessageAsync(messageTelegram.Chat.Id, messageTelegram.MessageId);
+                        }
+                        else if(message.Document.FileName.ToLower().Contains(".pdf")||message.Document.FileName.ToLower().Contains(".xls"))
+                        {
                             string pathName = lovePdf.GetOfficeToPdf(destinationFilePath, _theNameOfDownloadedFileFromTelegram);
                             await using Stream stream = File.OpenRead(pathName);
                             await botClient.SendDocumentAsync(message.Chat.Id, new InputOnlineFile(stream, pathName), replyToMessageId: message.MessageId);
                             await botClient.DeleteMessageAsync(messageTelegram.Chat.Id, messageTelegram.MessageId);
-                        //}
+                        }
                     }
                     catch(Exception e)
                     {
